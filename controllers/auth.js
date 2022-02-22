@@ -13,16 +13,16 @@ const login = async (req, res) => {
     const { email, password } = req.body
 
     if(!email || !password){
-        throw new BadRequestError('Please provide email and password')
+        throw new BadRequestError('Email y Password son requeridos')
     }
 
     const user = await User.findOne({ email })
     if (!user) {
-        throw new UnauthenticatedError('Invalid Credentials')
+        throw new UnauthenticatedError('Credenciales invalidas')
       }
     const isPasswordCorrect = await user.comparePassword(password)
     if(!isPasswordCorrect){
-        throw new UnauthenticatedError('Invalid Credential')
+        throw new UnauthenticatedError('Credenciales invalidas')
     }
 
     const token = user.createJWT()

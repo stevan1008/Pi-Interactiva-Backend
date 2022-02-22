@@ -9,6 +9,15 @@ const getAllTareas = async (req, res) => {
     }
 }
 
+const getTareasCompletadas = async (req, res) => {
+    try {
+        const tareas = await Tarea.find({}).select({completada:true})
+        res.status(200).json({ tareas })
+    } catch (error) {
+        res.status(500).json({ msg: error })
+    }
+}
+
 const getSingleTarea = async (req, res) => {
     try {
         const { id: tareaId } = req.params
@@ -60,4 +69,4 @@ const deleteTarea = async (req, res) => {
     }
 }
 
-module.exports = { getAllTareas, getSingleTarea, createTarea, updateTarea, deleteTarea }
+module.exports = { getAllTareas, getSingleTarea, getTareasCompletadas, createTarea, updateTarea, deleteTarea }
